@@ -1,0 +1,46 @@
+module SmartHomeSystem
+
+types
+
+DeviceState :: state : <registered> | <online> | <offline> | <error> | <decommissioned>;
+
+AlertState :: status : <active> | <resolved>;
+
+functions
+
+RegisterDevice : seq of char * bool -> DeviceState
+RegisterDevice(devId, exists) ==
+    if exists = true then
+        mk_DeviceState(<registered>)
+    else
+        mk_DeviceState(<registered>)
+
+pre exists = false
+
+post RESULT.state = <registered>;
+
+
+ActivateDevice : DeviceState -> DeviceState
+ActivateDevice(ds) ==
+    if ds.state = <registered> then
+        mk_DeviceState(<online>)
+    else
+        ds
+
+pre ds.state = <registered>
+
+post RESULT.state = <online>;
+
+
+ResolveAlert : AlertState -> AlertState
+ResolveAlert(al) ==
+    if al.status = <active> then
+        mk_AlertState(<resolved>)
+    else
+        al
+
+pre al.status = <active>
+
+post RESULT.status = <resolved>;
+
+end SmartHomeSystem
