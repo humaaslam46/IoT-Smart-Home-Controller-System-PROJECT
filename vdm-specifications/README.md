@@ -14,4 +14,4 @@ Implemented Operations:
 3. ResolveAlert
 
 Tool Used:
-- Overture VDMTools
+- Overture VDMTools 
