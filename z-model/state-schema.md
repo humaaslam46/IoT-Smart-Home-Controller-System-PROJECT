@@ -4,7 +4,7 @@
 ### Given Sets
 
 ```z
-[USER, DEVICE, RULE, ALERT]
+[USER, DEVICE]
 ```
 
 ---
@@ -12,13 +12,16 @@
 ### Enumerated Types
 
 ```z
-ROLE ::= Admin | Resident | Guest
+[USER, DEVICE]
 
-DEVSTATE ::= REGISTERED | ONLINE | OFFLINE | ERROR | DECOMMISSIONED
+DEVICESTATUS ::= online | offline | fault
 
-ALERTSTATE ::= ACTIVE | RESOLVED
+DOORSTATE ::= locked | unlocked
 
-USERSTATE ::= ACTIVE | LOCKED
+ALARMSTATE ::= active | inactive
+
+SESSIONSTATE ::= loggedIn | loggedOut
+
 ```
 
 ---
@@ -27,30 +30,13 @@ USERSTATE ::= ACTIVE | LOCKED
 
 ```z
 SmartHomeSystem
+-------------------------------
+registeredUsers : ℙ USER
+authenticatedUsers : ℙ USER
+registeredDevices : ℙ DEVICE
 
-users : ℙ USER
-devices : ℙ DEVICE
-rules : ℙ RULE
-alerts : ℙ ALERT
+deviceStatus : DEVICE ↔ DEVICESTATUS
+doorState : DEVICE ↔ DOORSTATE
+alarmState : ALARMSTATE
 
-userRole : USER ↔ ROLE
-userState : USER ↔ USERSTATE
-
-deviceState : DEVICE ↔ DEVSTATE
-
-ruleTarget : RULE ↔ DEVICE
-
-alertState : ALERT ↔ ALERTSTATE
-
---------------------------------------------------
-
-dom userRole = users
-
-dom userState = users
-
-dom deviceState = devices
-
-dom ruleTarget = rules
-
-dom alertState = alerts
 ```
