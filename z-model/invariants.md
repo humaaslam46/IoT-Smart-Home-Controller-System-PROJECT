@@ -1,36 +1,26 @@
 # Z Invariants
-
-```z
-∀ r : rules •
-ruleTarget(r) ∈ devices
-```
-
-Every rule must target an existing device.
-
+ ---
+ 
+Only registered users can log in.
 ---
 
 ```z
-∀ d : devices •
-deviceState(d) ≠ DECOMMISSIONED
-∨ deviceState(d) = DECOMMISSIONED
+authenticatedUsers ⊆ registeredUsers
+
+
 ```
 
-Every device must always have a valid state.
-
+Every registered device must have exactly one status.
 ---
 
 ```z
-∀ u : users •
-userRole(u) ∈ {Admin, Resident, Guest}
+dom deviceStatus = registeredDevices
+
 ```
 
-Every user must have exactly one valid role.
-
+Only registered devices may behave as smart doors.
 ---
 
 ```z
-∀ a : alerts •
-alertState(a) ∈ {ACTIVE, RESOLVED}
+∀ d : DEVICE • d ∈ dom doorState ⇒ d ∈ registeredDevices
 ```
-
-Every alert must exist in a valid alert state.
