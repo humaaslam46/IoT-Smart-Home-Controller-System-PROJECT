@@ -1,301 +1,181 @@
-# Requirement Defect Taxonomy Table
-## IoT Smart Home Controller System — SVV Lab Phase 1
+# 🐛 Requirement Defect Taxonomy Table
 
-| Field | Details |
-|---|---|
-| **Project** | IoT Smart Home Controller System |
-| **Phase** | Phase 1 — Requirement Engineering |
-| **University** | Lahore Garrison University |
-| **Linked SRS** | `requirements/SRS_IoT_SmartHome_v1.0.md` |
+<div align="center">
 
----
+## IoT Smart Home Controller System
 
-## Defect Classification Legend
+![Phase](https://img.shields.io/badge/Phase-1%20Requirement%20Engineering-blue?style=for-the-badge)
+![Defects](https://img.shields.io/badge/Total%20Defects-5-red?style=for-the-badge)
+![Status](https://img.shields.io/badge/All%20Defects-Resolved-brightgreen?style=for-the-badge)
 
-| Defect Type | Definition |
-|---|---|
-| 🟡 **Ambiguity** | Requirement uses vague, subjective, or unmeasurable language that can be interpreted in multiple ways |
-| 🔴 **Inconsistency** | Two or more requirements contradict each other, creating a logical conflict |
-| 🟢 **Non-Verifiability** | Requirement cannot be objectively tested or measured against a pass/fail criterion |
+> 📁 **File path:** `/requirements/defect-taxonomy.md`
+> 📄 **Linked SRS:** `/requirements/SRS_IoT_SmartHome_v2.0.md`
+
+</div>
 
 ---
 
-## Summary
+## 📖 Defect Type Legend
+
+| Symbol | Type | Definition |
+|:---:|---|---|
+| 🟡 | **Ambiguity** | Requirement uses vague or subjective language that can be interpreted in multiple ways — not implementable or testable as written |
+| 🔴 | **Inconsistency** | Two or more requirements **directly contradict** each other — both cannot be satisfied simultaneously |
+| 🟢 | **Non-Verifiability** | Requirement **cannot be measured** or tested with a clear pass/fail criterion — no acceptance threshold defined |
+
+---
+
+## 📊 Summary
 
 | Defect Type | Count | Status |
 |---|:---:|:---:|
-| 🟡 Ambiguity | 4 | ✅ All Resolved |
-| 🔴 Inconsistency | 3 | ✅ All Resolved |
-| 🟢 Non-Verifiability | 3 | ✅ All Resolved |
-| **Total** | **10** | **✅ All Resolved** |
+| 🟡 Ambiguity | 2 | ✅ Resolved |
+| 🔴 Inconsistency | 1 | ✅ Resolved |
+| 🟢 Non-Verifiability | 2 | ✅ Resolved |
+| **Total** | **5** | ✅ **All Resolved** |
 
 ---
 
-## 🟡 Ambiguity Defects
+## 🔍 Full Defect Table
 
-### DEFECT-01 — Ambiguous Account Lockout Threshold
+| ID | Defect Type | Defective Requirement | Problem | ✅ Corrected Requirement |
+|:---:|:---:|---|---|---|
+| **D1** | 🟡 Ambiguity | *"System should respond quickly."* | `quickly` is subjective — 1ms and 10 minutes are both "quick" to someone | **"System shall respond within 2 seconds."** |
+| **D2** | 🔴 Inconsistency | *"Only admins can unlock doors."* **AND** *"Users can unlock doors."* | Direct contradiction — both statements cannot be true at the same time | **"Authorized authenticated users can unlock doors."** |
+| **D3** | 🟢 Non-Verifiable | *"System should be user friendly."* | `user friendly` has no measurable criterion — impossible to write a pass/fail test | **"Users shall perform device control within 3 interface steps."** |
+| **D4** | 🟡 Ambiguity | *"Devices usually remain online."* | `usually` is vague — provides no implementable threshold or testable condition | **"Devices shall report their status every 30 seconds."** |
+| **D5** | 🟢 Non-Verifiable | *"Alarm activates instantly."* | `instantly` is not a measurable time unit — cannot be verified during testing | **"Alarm shall activate within 1 second of trigger."** |
+
+---
+
+## 🔬 Detailed Defect Analysis
+
+---
+
+### D1 — 🟡 Ambiguity: Vague Response Time
 
 | Field | Detail |
 |---|---|
-| **GitHub Issue** | #1 |
-| **Draft Req ID** | FR-AUTH-03 (draft) |
+| **Req ID** | D1 |
 | **Defect Type** | Ambiguity |
-| **Label** | `bug:ambiguity` |
-| **Status** | ✅ CLOSED |
-
-**Original Defective Requirement:**
-> *"The system should lock accounts after several failed attempts."*
-
-**Why It Is Defective:**
-The word `several` is subjective and non-measurable. Different stakeholders may interpret it as 3, 5, 10, or any other number. This makes the requirement unverifiable during testing and creates inconsistent implementation behavior.
-
-**Resolution:**
-Replaced `several` with an exact, testable threshold.
-
-**Resolved Requirement (FR-AUTH-03 final):**
-> *"The system shall lock a user account after **5 consecutive** failed login attempts. Unlocking requires Admin intervention."*
-
----
-
-### DEFECT-02 — Undefined Session Inactivity Period
-
-| Field | Detail |
-|---|---|
-| **GitHub Issue** | #2 |
-| **Draft Req ID** | FR-AUTH-04 (draft) |
-| **Defect Type** | Ambiguity |
-| **Label** | `bug:ambiguity` |
-| **Status** | ✅ CLOSED |
-
-**Original Defective Requirement:**
-> *"Sessions should expire after being idle for a long time."*
-
-**Why It Is Defective:**
-`A long time` is completely subjective. It provides no testable boundary. A developer cannot implement this, and a tester cannot write a pass/fail test case for it.
-
-**Resolution:**
-Defined as an exact, configurable time value.
-
-**Resolved Requirement (FR-AUTH-04 final):**
-> *"The system shall expire user sessions after **30 minutes** of inactivity and require re-authentication."*
-
----
-
-### DEFECT-03 — Offline Detection Has No Time Boundary
-
-| Field | Detail |
-|---|---|
 | **GitHub Issue** | #3 |
-| **Draft Req ID** | FR-DEV-06 (draft) |
-| **Defect Type** | Ambiguity |
-| **Label** | `bug:ambiguity` |
-| **Status** | ✅ CLOSED |
 
-**Original Defective Requirement:**
-> *"Devices should be considered offline if they stop responding."*
+**❌ Original (Defective):**
+> *"System should respond quickly."*
 
-**Why It Is Defective:**
-`Stop responding` has no time bound. A device that misses one heartbeat could be interpreted as offline, or it might require hours of silence. This makes implementation and testing impossible without a concrete threshold.
+**🔎 Why It Is Defective:**
+The word `quickly` is entirely subjective. A response of 2 seconds may be considered "quick" by one developer and unacceptably slow by another. This makes the requirement impossible to implement consistently and impossible to test with a pass/fail result.
 
-**Resolution:**
-Defined a configurable timeout with a concrete default value.
-
-**Resolved Requirement (FR-DEV-06 final):**
-> *"The system shall mark a device as `Offline` if no heartbeat is received within a configurable timeout (default: **60 seconds**)."*
+**✅ Corrected Requirement:**
+> *"System shall respond within **2 seconds** for all user-initiated device commands."*
 
 ---
 
-### DEFECT-04 — Alert Thresholds Undefined by Sensor Type
+### D2 — 🔴 Inconsistency: Contradictory Door Unlock Permissions
 
 | Field | Detail |
 |---|---|
-| **GitHub Issue** | #4 |
-| **Draft Req ID** | FR-ALRT-01 (draft) |
-| **Defect Type** | Ambiguity |
-| **Label** | `bug:ambiguity` |
-| **Status** | ✅ CLOSED |
-
-**Original Defective Requirement:**
-> *"Alerts should be generated for dangerous sensor readings."*
-
-**Why It Is Defective:**
-`Dangerous` is undefined and not quantified per sensor type. A temperature of 35°C is not dangerous, but smoke at any detectable level may be critical. Without sensor-specific thresholds and conditions, this requirement cannot be implemented or tested.
-
-**Resolution:**
-Decomposed into sensor-specific alert requirements, each with an explicit triggering condition.
-
-**Resolved Requirements:**
-- **FR-ALRT-01:** *"The system shall generate a `CRITICAL` alert when a smoke sensor reading exceeds the defined safety threshold."*
-- **FR-ALRT-02:** *"The system shall generate a `SECURITY` alert when motion is detected and the security mode is `ARMED`."*
-
----
-
-## 🔴 Inconsistency Defects
-
-### DEFECT-05 — Contradictory Device Access Permissions
-
-| Field | Detail |
-|---|---|
+| **Req ID** | D2 |
+| **Defect Type** | Inconsistency |
 | **GitHub Issue** | #5 |
-| **Draft Req IDs** | FR-DEV-03 (draft) vs FR-DEV-04 (draft) |
-| **Defect Type** | Inconsistency |
-| **Label** | `bug:inconsistency` |
-| **Status** | ✅ CLOSED |
 
-**Original Defective Requirements:**
-> - FR-DEV-03 (draft): *"All users can toggle devices."*
-> - FR-DEV-04 (draft): *"Only Admin can modify devices."*
+**❌ Original (Defective):**
+> - *"Only admins can unlock doors."*
+> - *"Users can unlock doors."*
 
-**Why It Is Defective:**
-These two requirements directly contradict each other. FR-DEV-03 grants all users device modification rights, while FR-DEV-04 restricts those rights to Admin only. A system cannot satisfy both simultaneously — this is a logical contradiction that makes formal verification impossible.
+**🔎 Why It Is Defective:**
+These two requirements are in direct logical contradiction. If only admins can unlock doors, then regular users cannot — and vice versa. A system cannot satisfy both simultaneously. In formal modeling (Z/Alloy), this creates an unsatisfiable invariant.
 
-**Resolution:**
-Decomposed device operations by type and scoped roles appropriately so they no longer overlap.
-
-**Resolved Requirements:**
-- **FR-DEV-03 final:** *"The system shall allow **Residents and Admins** to toggle device state between `ON` and `OFF`."* (control operation)
-- **FR-DEV-04 final:** *"The system shall allow **Admin only** to decommission a device."* (destructive operation)
+**✅ Corrected Requirement:**
+> *"**Authorized, authenticated users** (including Admins and permitted Residents) can unlock doors."*
 
 ---
 
-### DEFECT-06 — Admin "Manage Records" Conflicts With Audit Immutability
+### D3 — 🟢 Non-Verifiable: Unmeasurable Usability Claim
 
 | Field | Detail |
 |---|---|
-| **GitHub Issue** | #6 |
-| **Draft Req IDs** | FR-AUD-01 (draft) vs FR-AUD-02 (draft) |
-| **Defect Type** | Inconsistency |
-| **Label** | `bug:inconsistency` |
-| **Status** | ✅ CLOSED |
-
-**Original Defective Requirements:**
-> - FR-AUD-01 (draft): *"Admins can manage all system records."*
-> - FR-AUD-02 (draft): *"Logs cannot be deleted by anyone."*
-
-**Why It Is Defective:**
-`Manage all system records` implicitly includes the ability to delete records, which is directly contradicted by FR-AUD-02. This creates an inconsistency: the Admin role both can and cannot delete audit logs. In formal modeling, this would produce an unsatisfiable invariant.
-
-**Resolution:**
-FR-AUD-01 clarified to exclude deletion. FR-AUD-02 made explicit and absolute for all roles.
-
-**Resolved Requirements:**
-- **FR-AUD-01 final:** *"The system shall maintain an immutable audit log recording every device state change, user action, and rule execution — with actor identity and timestamp."*
-- **FR-AUD-02 final:** *"Audit logs must not be deletable by any role, including Admin. Minimum retention: 90 days."*
-
----
-
-### DEFECT-07 — Rule Conflict Detection Gap
-
-| Field | Detail |
-|---|---|
-| **GitHub Issue** | #7 |
-| **Draft Req IDs** | FR-RULE-02 (draft) — FR-RULE-06 missing entirely |
-| **Defect Type** | Inconsistency |
-| **Label** | `bug:inconsistency` |
-| **Status** | ✅ CLOSED |
-
-**Original Defective Requirements:**
-> - FR-RULE-02 (draft): *"Rules are validated at creation time."*
-> - (No rule existed for conflict detection)
-
-**Why It Is Defective:**
-FR-RULE-02 implied validation exists at creation, but no requirement defined what constitutes a conflict between rules. This gap allowed two contradictory rules (e.g., `IF smoke THEN turn fan ON` and `IF smoke THEN turn fan OFF`) to coexist in the system — an inconsistency that breaks system behavior and makes formal invariants unsatisfiable.
-
-**Resolution:**
-Added FR-RULE-06 to explicitly handle the missing conflict constraint.
-
-**Resolved Requirement (FR-RULE-06 final):**
-> *"The system shall reject rule creation if two rules target the same device with contradictory actions under the same triggering condition."*
-
----
-
-## 🟢 Non-Verifiability Defects
-
-### DEFECT-08 — Usability Criterion Not Measurable
-
-| Field | Detail |
-|---|---|
+| **Req ID** | D3 |
+| **Defect Type** | Non-Verifiability |
 | **GitHub Issue** | #8 |
-| **Draft Req ID** | NFR-05 (draft) |
-| **Defect Type** | Non-Verifiability |
-| **Label** | `bug:non-verifiable` |
-| **Status** | ✅ CLOSED |
 
-**Original Defective Requirement:**
-> *"The system should be easy to use for everyone."*
+**❌ Original (Defective):**
+> *"System should be user friendly."*
 
-**Why It Is Defective:**
-`Easy to use` and `everyone` are entirely subjective. There is no test you can run to determine if a system is "easy." A requirement without an acceptance criterion cannot be verified, cannot be included in a validation checklist, and cannot be formally specified.
+**🔎 Why It Is Defective:**
+`User friendly` cannot be measured. There is no test that produces a pass or fail result for "friendliness." This requirement provides no implementation guidance and cannot appear in a validation checklist.
 
-**Resolution:**
-Replaced with a concrete usability acceptance criterion based on measurable task completion.
-
-**Resolved Requirement (NFR-05 final):**
-> *"New Resident users shall complete basic device control tasks within **5 minutes** of first login without prior training."*
+**✅ Corrected Requirement:**
+> *"Users shall be able to perform any basic device control action within **3 interface steps** from the main dashboard."*
 
 ---
 
-### DEFECT-09 — Availability Not Quantified
+### D4 — 🟡 Ambiguity: Undefined Device Availability
 
 | Field | Detail |
 |---|---|
-| **GitHub Issue** | #9 |
-| **Draft Req ID** | NFR-02 (draft) |
-| **Defect Type** | Non-Verifiability |
-| **Label** | `bug:non-verifiable` |
-| **Status** | ✅ CLOSED |
+| **Req ID** | D4 |
+| **Defect Type** | Ambiguity |
+| **GitHub Issue** | #3 |
 
-**Original Defective Requirement:**
-> *"The system shall be highly available."*
+**❌ Original (Defective):**
+> *"Devices usually remain online."*
 
-**Why It Is Defective:**
-`Highly available` is a design aspiration, not a verifiable requirement. Without a specific uptime percentage, maintenance exclusions, and measurement method, this requirement cannot produce a pass/fail test result. It also cannot be expressed as a formal postcondition in VDM.
+**🔎 Why It Is Defective:**
+`Usually` is a probabilistic, undefined qualifier. It gives no threshold for acceptable downtime and no implementation guidance for how the system should detect or handle offline devices.
 
-**Resolution:**
-Defined a specific, industry-standard uptime metric.
-
-**Resolved Requirement (NFR-02 final):**
-> *"System uptime shall be **≥ 99.5%** (excluding scheduled maintenance windows)."*
+**✅ Corrected Requirement:**
+> *"Devices shall report their connectivity status to the controller every **30 seconds**. A device is marked `Offline` if no status report is received within 60 seconds."*
 
 ---
 
-### DEFECT-10 — Sensor Data Retention Period Unspecified
+### D5 — 🟢 Non-Verifiable: Unmeasurable Alarm Speed
 
 | Field | Detail |
 |---|---|
-| **GitHub Issue** | #10 |
-| **Draft Req ID** | FR-SEN-04 (draft) |
+| **Req ID** | D5 |
 | **Defect Type** | Non-Verifiability |
-| **Label** | `bug:non-verifiable` |
-| **Status** | ✅ CLOSED |
+| **GitHub Issue** | #4 |
 
-**Original Defective Requirement:**
-> *"The system shall store sensor data for future use."*
+**❌ Original (Defective):**
+> *"Alarm activates instantly."*
 
-**Why It Is Defective:**
-`Future use` is not testable. No duration is defined (1 day? 1 year?). No output format is specified. A tester cannot verify this requirement because there is no criterion for success. Additionally, `future use` provides no guidance for implementation.
+**🔎 Why It Is Defective:**
+`Instantly` is not a defined unit of time. In engineering and testing, every timing requirement must have a concrete measurable bound. Without one, no test case can be written and no benchmark can be set during validation.
 
-**Resolution:**
-Added a default retention period and a concrete export format.
-
-**Resolved Requirement (FR-SEN-04 final):**
-> *"The system shall retain sensor history for a configurable duration (default: **30 days**) and allow historical data export in **CSV format**."*
+**✅ Corrected Requirement:**
+> *"The alarm shall activate within **1 second** of the triggering emergency condition being detected."*
 
 ---
 
-## GitHub Issues Quick Reference
+## 📌 Traceability to GitHub Issues
 
-| # | Issue Title | Label | Linked Req |
-|:---:|---|---|---|
-| 1 | `[DEFECT] Ambiguous account lockout threshold` | `bug:ambiguity` | FR-AUTH-03 |
-| 2 | `[DEFECT] Undefined session inactivity period` | `bug:ambiguity` | FR-AUTH-04 |
-| 3 | `[DEFECT] Offline detection has no time bound` | `bug:ambiguity` | FR-DEV-06 |
-| 4 | `[DEFECT] Alert thresholds undefined by sensor type` | `bug:ambiguity` | FR-ALRT-01/02 |
-| 5 | `[DEFECT] Contradictory device access permissions` | `bug:inconsistency` | FR-DEV-03/04 |
-| 6 | `[DEFECT] Admin manage records conflicts with audit immutability` | `bug:inconsistency` | FR-AUD-01/02 |
-| 7 | `[DEFECT] Rule conflict detection gap` | `bug:inconsistency` | FR-RULE-02/06 |
-| 8 | `[DEFECT] Usability criterion not measurable` | `bug:non-verifiable` | NFR-05 |
-| 9 | `[DEFECT] Availability requirement not quantified` | `bug:non-verifiable` | NFR-02 |
-| 10 | `[DEFECT] Sensor data retention period unspecified` | `bug:non-verifiable` | FR-SEN-04 |
+| Defect ID | Defect Type | GitHub Issue | Status |
+|:---:|---|:---:|:---:|
+| D1 | 🟡 Ambiguity — Response time | #3 | ✅ Closed |
+| D2 | 🔴 Inconsistency — Door permissions | #5 | ✅ Closed |
+| D3 | 🟢 Non-Verifiable — Usability | #8 | ✅ Closed |
+| D4 | 🟡 Ambiguity — Device availability | #3 | ✅ Closed |
+| D5 | 🟢 Non-Verifiable — Alarm speed | #4 | ✅ Closed |
 
 ---
+
+## 📌 SVV Pipeline Context
+
+> These defects were identified and resolved during **Phase 1 — Requirement Engineering**.
+> The corrected requirements feed directly into subsequent pipeline phases:
+
+| Phase | How These Defects Are Used |
+|---|---|
+| **Phase 2 — Z Notation** | Corrected requirements → precise state invariants |
+| **Phase 3 — VDM** | Corrected requirements → measurable pre/postconditions |
+| **Phase 4 — Alloy** | Corrected requirements → verifiable relational constraints |
+| **Phase 5 — Validation** | Corrected requirements → pass/fail test checklist items |
+
+---
+
+<div align="center">
+
+*SVV Lab — Lahore Garrison University — Spring 2026*
+
+</div>
