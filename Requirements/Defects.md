@@ -8,11 +8,6 @@
 ![Defects](https://img.shields.io/badge/Total%20Defects-5-red?style=for-the-badge)
 ![Status](https://img.shields.io/badge/All%20Defects-Resolved-brightgreen?style=for-the-badge)
 
-> 📁 **File path:** `/requirements/defect-taxonomy.md`
-> 📄 **Linked SRS:** `/requirements/SRS_IoT_SmartHome_v2.0.md`
-
-</div>
-
 ---
 
 ## 📖 Defect Type Legend
