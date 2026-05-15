@@ -39,3 +39,24 @@ fact AwayModeSafety {
         Alarm.alarmState = Active
     }
 }
+
+## 3. Counterexample Analysis
+
+We intentionally created three faulty assertions to generate counterexamples.
+
+---
+
+### CE 1: All Lights Always Off
+
+**Description:**  
+This assertion claims that every light is always Off. However, when the system is in Home mode, lights can be turned On. Alloy finds a counterexample where `SmartHome.mode = Home` and a light `Light0` has `state = On`. This shows the system does not unnecessarily force lights off.
+
+**Code:**
+
+```alloy
+assert AllLightsAlwaysOff {
+    all l : Light | l.state = Off
+}
+
+check AllLightsAlwaysOff for 15
+
