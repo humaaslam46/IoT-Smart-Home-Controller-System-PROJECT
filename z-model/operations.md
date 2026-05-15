@@ -1,88 +1,71 @@
-# Z Operations
-## IoT Smart Home Controller System
+# 🔰 Z Notation — Initialization Schema
+
+<div align="center">
+
+![Phase](https://img.shields.io/badge/Phase-2%20Z%20Notation-blue?style=for-the-badge)
+![Schema](https://img.shields.io/badge/Schema-InitSmartHomeSystem-purple?style=for-the-badge)
+![Status](https://img.shields.io/badge/State-Empty%20%2F%20Safe-brightgreen?style=for-the-badge)
+
+> Defines the **initial valid state** of the IoT Smart Home Controller System
+> before any users, devices, or operations are introduced.
+
+</div>
 
 ---
 
-## 1. RegisterDevice
+## 📌 What Is an Initialization Schema?
 
-```z
-RegisterDevice
-Δ SmartHomeSystem
+In Z Notation, the **initialization schema** defines the starting point of the system.
+It must satisfy all invariants defined in the main state schema (`SmartHomeSystem`).
+All invariants hold trivially here because every set starts **empty** — there are no violations possible on empty collections.
 
-newDevice? : DEVICE
+---
 
---------------------------------------------
+## 📐 Schema
 
-newDevice? ∉ devices
-
-devices' = devices ∪ {newDevice?}
-
-deviceState' =
-deviceState ∪ {newDevice? ↦ REGISTERED}
-
-users' = users
-rules' = rules
-alerts' = alerts
-userRole' = userRole
-userState' = userState
-ruleTarget' = ruleTarget
-alertState' = alertState
+```
+InitSmartHomeSystem
+───────────────────────────────
+SmartHomeSystem
+───────────────────────────────
+registeredUsers    = ∅
+authenticatedUsers = ∅
+registeredDevices  = ∅
+deviceStatus       = ∅
+doorState          = ∅
+alarmState         = inactive
 ```
 
 ---
 
-## 2. ActivateDevice
+## 🔎 Component Breakdown
 
-```z
-ActivateDevice
-Δ SmartHomeSystem
-
-device? : DEVICE
-
---------------------------------------------
-
-device? ∈ devices
-
-deviceState(device?) = REGISTERED
-
-deviceState' =
-deviceState ⨁ {device? ↦ ONLINE}
-
-devices' = devices
-users' = users
-rules' = rules
-alerts' = alerts
-userRole' = userRole
-userState' = userState
-ruleTarget' = ruleTarget
-alertState' = alertState
-```
+| Component | Initial Value | Reason |
+|---|:---:|---|
+| `registeredUsers` | `∅` | No users have been registered yet |
+| `authenticatedUsers` | `∅` | No users are logged in at startup |
+| `registeredDevices` | `∅` | No IoT devices have been added yet |
+| `deviceStatus` | `∅` | No device mappings exist — empty map |
+| `doorState` | `∅` | No door states assigned — empty map |
+| `alarmState` | `inactive` | Alarm is off by default at system start |
 
 ---
 
-## 3. ResolveAlert
+## ✅ Invariant Satisfaction at Init
 
-```z
-ResolveAlert
-Δ SmartHomeSystem
+| Invariant | Holds at Init? | Why |
+|---|:---:|---|
+| `authenticatedUsers ⊆ registeredUsers` | ✅ Yes | `∅ ⊆ ∅` is always true |
+| `dom deviceStatus = registeredDevices` | ✅ Yes | `∅ = ∅` is always true |
+| `dom doorState ⊆ registeredDevices` | ✅ Yes | `∅ ⊆ ∅` is always true |
 
-alert? : ALERT
+> All invariants from `SmartHomeSystem` are satisfied at initialization.
+> The system starts in a **legal, consistent state**.
 
---------------------------------------------
+---
 
-alert? ∈ alerts
+<div align="center">
 
-alertState(alert?) = ACTIVE
+*SVV Lab — Lahore Garrison University — Spring 2026*
 
-alertState' =
-alertState ⨁ {alert? ↦ RESOLVED}
-
-devices' = devices
-users' = users
-rules' = rules
-alerts' = alerts
-userRole' = userRole
-userState' = userState
-deviceState' = deviceState
-ruleTarget' = ruleTarget
-```
+</div>
