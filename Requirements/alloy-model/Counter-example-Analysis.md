@@ -39,6 +39,8 @@ fact AwayModeSafety {
         Alarm.alarmState = Active
     }
 }
+````
+---
 
 ## 3. Counterexample Analysis
 
@@ -57,6 +59,35 @@ This assertion claims that every light is always Off. However, when the system i
 assert AllLightsAlwaysOff {
     all l : Light | l.state = Off
 }
+```
+---
+### CE 2: All Doors Always Unlocked
 
-check AllLightsAlwaysOff for 15
+**Description:**  
+This assertion claims every door is always Unlocked. In Away mode, the invariant forces all doors to be Locked. Alloy finds a counterexample with `SmartHome.mode = Away` and a door Door0 having `doorState = Locked`. The counterexample confirms the security rule works correctly.
+
+**Code:**
+```alloy
+assert AllDoorsAlwaysUnlocked {
+    all d : Door | d.doorState = Unlocked
+}
+
+check AllDoorsAlwaysUnlocked for 15
+```
+---
+
+### CE 3: Alarms Alway Inactive
+
+**Description:**  
+This assertion claims the alarm is always Inactive. But when the system switches to Away mode, the invariant activates the alarm. Alloy finds a counterexample with`mode = Away` and `Alarm.alarmState = Active.` This verifies the alarm behavior is correctly tied to home mode.
+
+**Code:**
+```alloy
+assert AlarmAlwaysInactive {
+    Alarm.alarmState = Inactive
+}
+
+check AlarmAlwaysInactive for 15
+```
+---
 
