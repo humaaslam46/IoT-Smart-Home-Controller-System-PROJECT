@@ -1,46 +1,240 @@
-module SmartHomeSystem
-
+-- =========================================================
+-- IoT Smart Home Controller System
+-- VDM-SL Functional Specification
+-- =========================================================
+-- TYPE DEFINITIONS
+-- =========================================================
 types
 
-DeviceState :: state : <registered> | <online> | <offline> | <error> | <decommissioned>;
+-- USER represents authorized system users
+USER = token;
 
-AlertState :: status : <active> | <resolved>;
+-- DEVICE represents smart home devices
+DEVICE = token;
 
-functions
+-- Possible status values for a smart device
+DEVICESTATUS =
+    <online>      -- Device is operational
+  | <offline>     -- Device is disconnected
+  | <fault>;      -- Device has an error
 
-RegisterDevice : seq of char * bool -> DeviceState
-RegisterDevice(devId, exists) ==
-    if exists = true then
-        mk_DeviceState(<registered>)
-    else
-        mk_DeviceState(<registered>)
+-- Possible states for smart door locks
+DOORSTATE =
+    <locked>      -- Door is locked
+  | <unlocked>;   -- Door is unlocked
 
-pre exists = false
+-- Possible alarm states
+ALARMSTATE =
+    <active>      -- Alarm is activated
+  | <inactive>;   -- Alarm is disabled
+-- =========================================================
+-- SYSTEM STATE DEFINITION
+-- =========================================================
 
-post RESULT.state = <registered>;
+state SmartHomeSystem of
+
+    -- Set of all registered users in the system
+    registeredUsers : set of USER
+
+    -- Users currently authenticated/logged in
+    authenticatedUsers : set of USER
+
+    -- Set of registered smart devices
+    registeredDevices : set of DEVICE
 
 
-ActivateDevice : DeviceState -> DeviceState
-ActivateDevice(ds) ==
-    if ds.state = <registered> then
-        mk_DeviceState(<online>)
-    else
-        ds
+    -- Mapping of each device to its current status
+    deviceStatus : map DEVICE to DEVICESTATUS
 
-pre ds.state = <registered>
-
-post RESULT.state = <online>;
+    -- Mapping of door devices to their lock state
+    doorState : map DEVICE to DOORSTATE
 
 
-ResolveAlert : AlertState -> AlertState
-ResolveAlert(al) ==
-    if al.status = <active> then
-        mk_AlertState(<resolved>)
-    else
-        al
+    -- Current state of the security alarm
+    alarmState : ALARMSTATE
+-- =========================================================
+-- STATE INVARIANTS
+-- These rules must always remain true
+-- =========================================================
 
-pre al.status = <active>
+inv mk_SmartHomeSystem
+(
+    ru,
+    au,
+    rd,
+    ds,
+    dr,
+    al
+) ==
 
-post RESULT.status = <resolved>;
+    -- Only registered users can be authenticated
+    au subset ru
 
-end SmartHomeSystem
+    and
+
+    -- Every registered device must have a status
+    dom ds = rd
+
+    and
+
+    -- Door states only apply to registered devices
+    dom dr subset rd
+-- =========================================================
+-- INITIAL SYSTEM STATE
+-- =========================================================
+
+init s ==
+
+    s = mk_SmartHomeSystem
+    (
+        -- No registered users initially
+        {},
+
+        -- No authenticated users initially
+        {},
+
+        -- No registered devices initially
+        {},
+
+        -- Empty device status mapping
+        {|->},
+
+        -- Empty door state mapping
+        {|->},
+
+        -- Alarm initially inactive
+        <inactive>
+    )
+-- =========================================================
+-- OPERATIONS
+-- =========================================================
+operations
+-- =========================================================
+-- Operation: RegisterDevice
+-- Purpose:
+-- Registers a new smart device in the system
+-- and assigns ONLINE status by default.
+-- =========================================================
+RegisterDevice : DEVICE ==> ()
+
+RegisterDevice(d) ==
+
+(
+    -- Add device to registered device set
+    registeredDevices :=
+        registeredDevices union {d};
+
+    -- Assign ONLINE status to new device
+    deviceStatus :=
+        deviceStatus munion {d |-> <online>}
+)
+
+pre
+    -- Device must not already exist
+    d not in set registeredDevices
+
+post
+    -- Device is successfully registered
+    d in set registeredDevices
+
+    and
+
+    -- Newly registered device becomes ONLINE
+    deviceStatus(d) = <online>;
+-- =========================================================
+-- Operation: LoginUser
+-- Purpose:
+-- Authenticates a registered user.
+-- =========================================================
+
+LoginUser : USER ==> ()
+
+LoginUser(u) ==
+
+(
+    -- Add user to authenticated users
+    authenticatedUsers :=
+        authenticatedUsers union {u}
+)
+
+pre
+    -- User must already be registered
+    u in set registeredUsers
+
+post
+    -- User becomes authenticated
+    u in set authenticatedUsers;
+-- =========================================================
+-- Operation: LockDoor
+-- Purpose:
+-- Locks a smart door device.
+-- =========================================================
+
+LockDoor : DEVICE ==> ()
+
+LockDoor(d) ==
+
+(
+    -- Update door state to LOCKED
+    doorState :=
+        doorState ++ {d |-> <locked>}
+)
+
+pre
+    -- Device must be registered
+    d in set registeredDevices
+
+    and
+
+    -- Device must currently be online
+    deviceStatus(d) = <online>
+
+post
+    -- Door becomes LOCKED
+    doorState(d) = <locked>;
+
+-- =========================================================
+-- Operation: ActivateAlarm
+-- Purpose:
+-- Activates the smart home alarm system.
+-- =========================================================
+
+ActivateAlarm : () ==> ()
+
+ActivateAlarm() ==
+
+(
+    -- Change alarm state to ACTIVE
+    alarmState := <active>
+)
+
+pre
+    -- Alarm must currently be inactive
+    alarmState = <inactive>
+
+post
+    -- Alarm becomes ACTIVE
+    alarmState = <active>
+
+-- =========================================================
+-- Operation: DeactivateAlarm
+-- Purpose:
+-- Deactivates the smart home alarm system.
+-- =========================================================
+
+DeactivateAlarm : () ==> ()
+
+DeactivateAlarm() ==
+
+(
+    -- Change alarm state to INACTIVE
+    alarmState := <inactive>
+)
+
+pre
+    -- Alarm must currently be active
+    alarmState = <active>
+
+post
+    -- Alarm becomes INACTIVE
+    alarmState = <inactive>; 
