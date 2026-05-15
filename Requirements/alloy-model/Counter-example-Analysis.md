@@ -1,4 +1,4 @@
-# Alloy Model
+# Alloy Model – Structural Verification
 
 **Tool:** Alloy Analyzer  
 **System:** IoT Smart Home Controller  
@@ -28,7 +28,7 @@ The model represents the smart home as a set of relations:
 
 ## 2. Constraint Verification (Invariants)
 
-We defined three **facts** (invariants) that must always hold:
+We defined a **fact** (invariant) that must always hold:
 
 ```alloy
 fact AwayModeSafety {
