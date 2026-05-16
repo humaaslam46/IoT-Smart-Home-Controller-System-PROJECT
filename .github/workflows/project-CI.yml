@@ -56,22 +56,59 @@ jobs:
 
 
       # ==========================================
-      # STEP 4: Verify Important Files
+      # STEP 4: Validate Alloy Specifications
       # ==========================================
 
-      - name: Verify Documentation Files
+      - name: Validate Alloy Models
         run: |
 
-          find . -name "*.md"
-          echo "Markdown files detected"
-
           find . -name "*.als"
+
           echo "Alloy specification files detected"
 
 
 
       # ==========================================
-      # STEP 5: Pipeline Success Message
+      # STEP 5: Validate Z Specifications
+      # ==========================================
+
+      - name: Validate Z Schemas
+        run: |
+
+          find . -name "*.zed"
+
+          echo "Z schema files detected"
+
+
+
+      # ==========================================
+      # STEP 6: Validate VDM Specifications
+      # ==========================================
+
+      - name: Validate VDM Specifications
+        run: |
+
+          find . -name "*.vdmsl"
+
+          echo "VDM specification files detected"
+
+
+
+      # ==========================================
+      # STEP 7: Validate Documentation Files
+      # ==========================================
+
+      - name: Validate Documentation
+        run: |
+
+          find . -name "*.md"
+
+          echo "Documentation files detected"
+
+
+
+      # ==========================================
+      # STEP 8: Pipeline Success
       # ==========================================
 
       - name: Pipeline Success
