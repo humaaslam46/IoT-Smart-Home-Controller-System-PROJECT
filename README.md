@@ -6,8 +6,8 @@
 
 [![Z Notation](https://img.shields.io/badge/Z%20Notation-Formal%20Model-1F3864?style=for-the-badge)](./z-model)
 [![VDM-SL](https://img.shields.io/badge/VDM--SL-Functional%20Spec-6A0DAD?style=for-the-badge)](./vdm-specifications)
-[![Alloy](https://img.shields.io/badge/Alloy-Structural%20Verify-E05C00?style=for-the-badge)](./alloy-model)
-[![CI](https://img.shields.io/badge/GitHub%20Actions-CI%20Pipeline-2088FF?style=for-the-badge)](./ci-pipeline)
+[![Alloy](https://img.shields.io/badge/Alloy-Structural%20Verify-E05C00?style=for-the-badge)](./Requirements/alloy-model)
+[![CI](https://img.shields.io/badge/GitHub%20Actions-CI%20Pipeline-2088FF?style=for-the-badge)](./.github/workflows/project-CI.yml)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen?style=for-the-badge)](./LICENSE)
 
 > A formally verified IoT smart home management system modeled using **Z Notation**, **VDM-SL**, and **Alloy Analyzer** as part of the SVV Lab pipeline at Lahore Garrison University.
@@ -42,23 +42,28 @@ The **IoT Smart Home Controller System** allows authenticated users to monitor a
 
 ```
 📦 IoT-Smart-Home-Controller-System-PROJECT
-├── 📁 Requirements
-│   ├── SRS_IoT_SmartHome_v2.0.md       ← Software Requirements Specification
-│   └── defect-taxonomy.md              ← Requirement Defect Taxonomy Table
 │
-├── 📁 z-model
-│   ├── SmartHomeSystem.zed             ← Z Notation formal model (CZT Eclipse)
-│   ├── Z-Initialization-Schema.md      ← Init schema with invariant proofs
-│   └── Z-Operations.md                 ← Δ Operation schemas
+├── 📁 .github/
+│   └── 📁 workflows/
+│       └── project-CI.yml              ← GitHub Actions CI pipeline
 │
-├── 📁 vdm-specifications
-│   ├── SmartHome.vdmsl                 ← VDM-SL functional specification
-│   └── README.md                       ← Operations & pre/post conditions
+├── 📁 Requirements/
+│   ├── 📁 alloy-model/                 ← Alloy structural verification files
+│   ├── Defects.md                      ← Requirement Defect Taxonomy Table
+│   └── SRS.md                          ← Software Requirements Specification
 │
-├── 📁 alloy-model                      ← Alloy structural verification
-├── 📁 validation                       ← Validation checklist
-├── 📁 ci-pipeline                      ← GitHub Actions workflow
-└── LICENSE
+├── 📁 Validation-Checklist/            ← Validation checklist (15 items)
+│
+├── 📁 vdm-specifications/              ← VDM-SL functional specification
+│   └── SmartHome.vdmsl
+│
+├── 📁 z-model/                         ← Z Notation formal model (CZT Eclipse)
+│   ├── SmartHomeSystem.zed
+│   ├── Z-Initialization-Schema.md
+│   └── Z-Operations.md
+│
+├── LICENSE
+└── README.md
 ```
 
 ---
@@ -108,7 +113,7 @@ The **IoT Smart Home Controller System** allows authenticated users to monitor a
 | D4 | 🟡 Ambiguity — device availability | ✅ |
 | D5 | 🟢 Non-Verifiable — "instantly" | ✅ |
 
-> See [`requirements/defect-taxonomy.md`](./Requirements/defect-taxonomy.md) for full analysis.
+> See [`Requirements/Defects.md`](./Requirements/Defects.md) for full analysis.
 
 ---
 
@@ -119,7 +124,7 @@ The **IoT Smart Home Controller System** allows authenticated users to monitor a
 | [CZT — Eclipse IDE](http://czt.sourceforge.net) | Z Notation modeling (`.zed` files) |
 | [Overture VDMTools](http://overturetool.org) | VDM-SL functional specification |
 | [Alloy Analyzer](http://alloytools.org) | Structural verification & counterexample analysis |
-| GitHub Actions | CI pipeline for artifact validation |
+| GitHub Actions | CI pipeline — `project-CI.yml` |
 
 ---
 
