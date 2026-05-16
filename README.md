@@ -45,22 +45,29 @@ The **IoT Smart Home Controller System** allows authenticated users to monitor a
 │
 ├── 📁 .github/
 │   └── 📁 workflows/
-│       └── project-CI.yml              ← GitHub Actions CI pipeline
+│       └── project-CI.yml                  ← GitHub Actions CI pipeline
 │
 ├── 📁 Requirements/
-│   ├── 📁 alloy-model/                 ← Alloy structural verification files
-│   ├── Defects.md                      ← Requirement Defect Taxonomy Table
-│   └── SRS.md                          ← Software Requirements Specification
+│   ├── 📁 alloy-model/
+│   │   ├── SmartHome.als                   ← Alloy structural model
+│   │   ├── Counter-example-Analysis.md     ← Counterexample analysis report
+│   │   └── counter-examples.md             ← Counterexample details
+│   ├── Defects.md                          ← Requirement Defect Taxonomy Table
+│   └── SRS.md                              ← Software Requirements Specification
 │
-├── 📁 Validation-Checklist/            ← Validation checklist (15 items)
+├── 📁 Validation-Checklist/                ← Validation checklist (15 items)
 │
-├── 📁 vdm-specifications/              ← VDM-SL functional specification
-│   └── SmartHome.vdmsl
+├── 📁 vdm-specifications/
+│   ├── vdm-specificaions.vdmsl             ← VDM-SL functional specification
+│   ├── Counter-examples.als                ← VDM counterexamples
+│   └── README.md                           ← Operations & pre/post conditions
 │
-├── 📁 z-model/                         ← Z Notation formal model (CZT Eclipse)
-│   ├── SmartHomeSystem.zed
-│   ├── Z-Initialization-Schema.md
-│   └── Z-Operations.md
+├── 📁 z-model/
+│   ├── state-schema.md                     ← Z state schema definition
+│   ├── invariants.md                       ← System invariants (INV-1 to INV-4)
+│   ├── operations.md                       ← Δ Operation schemas
+│   ├── Initialization-Schema.md            ← Init state with invariant proofs
+│   └── state-transition.md                 ← State transition definitions
 │
 ├── LICENSE
 └── README.md
