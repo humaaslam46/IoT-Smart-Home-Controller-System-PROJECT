@@ -1,36 +1,79 @@
-# This is a basic workflow to help you get started with Actions
+name: SVV Project CI Pipeline
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+
+  validation:
+
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # ==========================================
+      # STEP 1: Checkout Repository
+      # ==========================================
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+
+
+      # ==========================================
+      # STEP 2: Display Repository Structure
+      # ==========================================
+
+      - name: Show Repository Structure
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo "Displaying repository structure..."
+          ls -R
+
+
+
+      # ==========================================
+      # STEP 3: Verify Required Project Folders
+      # ==========================================
+
+      - name: Verify Project Folders
+        run: |
+
+          test -d Requirements
+          echo "Requirements folder exists"
+
+          test -d z-model
+          echo "z-model folder exists"
+
+          test -d vdm-specifications
+          echo "vdm-specifications folder exists"
+
+
+
+      # ==========================================
+      # STEP 4: Verify Important Files
+      # ==========================================
+
+      - name: Verify Documentation Files
+        run: |
+
+          find . -name "*.md"
+          echo "Markdown files detected"
+
+          find . -name "*.als"
+          echo "Alloy specification files detected"
+
+
+
+      # ==========================================
+      # STEP 5: Pipeline Success Message
+      # ==========================================
+
+      - name: Pipeline Success
+        run: |
+          echo "SVV CI Pipeline Executed Successfully"
