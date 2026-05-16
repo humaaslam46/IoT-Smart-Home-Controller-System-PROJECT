@@ -38,77 +38,64 @@ jobs:
 
 
       # ==========================================
-      # STEP 3: Verify Required Project Folders
+      # STEP 3: Validate Requirements Folder
       # ==========================================
 
-      - name: Verify Project Folders
+      - name: Validate Requirements Folder
         run: |
-
           test -d Requirements
           echo "Requirements folder exists"
 
+
+
+      # ==========================================
+      # STEP 4: Validate Z Model
+      # ==========================================
+
+      - name: Validate Z Specifications
+        run: |
           test -d z-model
-          echo "z-model folder exists"
-
-          test -d vdm-specifications
-          echo "vdm-specifications folder exists"
-
-
-
-      # ==========================================
-      # STEP 4: Validate Alloy Specifications
-      # ==========================================
-
-      - name: Validate Alloy Models
-        run: |
-
-          find . -name "*.als"
-
-          echo "Alloy specification files detected"
-
-
-
-      # ==========================================
-      # STEP 5: Validate Z Specifications
-      # ==========================================
-
-      - name: Validate Z Schemas
-        run: |
-
           find . -name "*.zed"
-
-          echo "Z schema files detected"
+          echo "Z specification files detected"
 
 
 
       # ==========================================
-      # STEP 6: Validate VDM Specifications
+      # STEP 5: Validate VDM Specifications
       # ==========================================
 
       - name: Validate VDM Specifications
         run: |
-
+          test -d vdm-specifications
           find . -name "*.vdmsl"
-
           echo "VDM specification files detected"
 
 
 
       # ==========================================
-      # STEP 7: Validate Documentation Files
+      # STEP 6: Validate Alloy Models
       # ==========================================
 
-      - name: Validate Documentation
+      - name: Validate Alloy Models
         run: |
-
-          find . -name "*.md"
-
-          echo "Documentation files detected"
+          find . -name "*.als"
+          echo "Alloy specification files detected"
 
 
 
       # ==========================================
-      # STEP 8: Pipeline Success
+      # STEP 7: Validate Documentation
+      # ==========================================
+
+      - name: Validate Documentation Files
+        run: |
+          find . -name "*.md"
+          echo "Markdown documentation detected"
+
+
+
+      # ==========================================
+      # STEP 8: Final Pipeline Status
       # ==========================================
 
       - name: Pipeline Success
