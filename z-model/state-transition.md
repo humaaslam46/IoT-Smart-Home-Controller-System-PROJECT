@@ -8,7 +8,6 @@
 | Current State | Event | Next State |
 |---|---|---|
 | registered | device activated | online |
-| online | heartbeat timeout | offline |
 | offline | reconnect device | online |
 | online | device malfunction | error |
 | error | device repaired | online |
@@ -35,31 +34,23 @@
 
 ---
 
-# Formal Transition Constraints
+# Formal Transition Schema
 
 ```z
+ΔSmartHomeSystem
+----------------------------------------------
+newDeviceStatus? : DEVICE ↔ DEVICESTATUS
+newDoorState? : DEVICE ↔ DOORSTATE
+newAlarmState? : ALARMSTATE
+
+deviceStatus' = newDeviceStatus?
+doorState' = newDoorState?
+alarmState' = newAlarmState?
+
 ∀ d : DEVICE •
-    deviceState(d) = decommissioned ⇒
-    deviceState'(d) = decommissioned
+    d ∈ dom newDeviceStatus? ⇒ d ∈ registeredDevices
+    
+∀ d : DEVICE •
+    newDeviceStatus?(d) ∈ {online, offline, fault}
 ```
-
-A decommissioned device cannot return to another state.
-
 ---
-
-```z
-∀ a : ALERT •
-    alertState(a) = resolved ⇒
-    alertState'(a) = resolved
-```
-
-A resolved alert cannot become active again.
-
----
-
-```z
-∀ d1, d2 : DEVICE •
-    d1 ≠ d2 ∧
-    deviceState(d1) = online ⇒
-    deviceState(d2) ∈ {registered, offline, error, decommissioned, online}
-```
