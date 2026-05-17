@@ -18,23 +18,20 @@
 
 ## 📋 Checklist
 
-| # | Requirement | 🔧 Method | 📄 Artifact | Result |
-|:---:|---|---|---|:---:|
-| R1 | System supports multiple users | Z state + Alloy signatures | Z state schema, `User` sig | ✅ |
-| R2 | All devices belong to the system | Alloy facts | `DeviceOwnership` fact | ✅ |
-| R3 | System maintains device states (ON/OFF) | VDM state + Alloy | VDM `DeviceState`, Alloy `state` | ✅ |
-| R4 | System maintains door lock states | Alloy assertions + VDM ops | Alloy `DoorState`, VDM `LockDoor` | ✅ |
-| R5 | Doors auto-lock in Away mode | Alloy invariant | `AwayModeSafety` fact | ✅ |
-| R6 | Lights/fans turn OFF in Away mode | Alloy assertion | `NoDeviceOnInAwayMode` | ✅ |
-| R7 | Alarm activates in Away mode | Alloy invariant | `AwayModeSafety` fact | ✅ |
-| R8 | Registered users can authenticate | VDM pre/post conditions | `LoginUser` operation | ✅ |
-| R9 | New devices can be registered | VDM operation contracts | `RegisterDevice` operation | ✅ |
-| R10 | Door ops apply to registered devices only | VDM preconditions | `LockDoor` precondition | ✅ |
-| R11 | Invariants hold during all operations | Z schemas + Alloy facts | Z invariants, Alloy facts | ✅ |
-| R12 | Invalid assumptions generate counterexamples | Alloy Analyzer | Counterexample report | ✅ |
-| R13 | Repository structure is valid | GitHub Actions CI | CI execution logs | ✅ |
-| R14 | Formal artifacts exist in repository | CI validation steps | GitHub Actions workflow | ✅ |
-| R15 | Documentation artifacts are maintained | Markdown checks in CI | `.md` validation in CI | ✅ |
+# Validation Checklist – IoT Smart Home Controller System
+
+| ID | Requirement | Validation Criteria | Method | Status |
+|---|---|---|---|---|
+| R1 | User authentication | Registered users can log in successfully | VDM pre/post verification | ✅ Pass |
+| R2 | Device registration | Devices are added correctly into the system | VDM operation validation | ✅ Pass |
+| R3 | Door security | Doors lock automatically in Away mode | Alloy assertion checking | ✅ Pass |
+| R4 | Device safety control | Lights and fans turn OFF in Away mode | Alloy invariant verification | ✅ Pass |
+| R5 | Alarm activation | Alarm activates in Away mode | Alloy fact validation | ✅ Pass |
+| R6 | System invariants | System constraints remain consistent | Z schema verification | ✅ Pass |
+| R7 | Device ownership | All devices belong to SmartHome | Alloy relational verification | ✅ Pass |
+| R8 | CI repository validation | Repository structure validated successfully | GitHub Actions CI pipeline | ✅ Pass |
+| R9 | Documentation validation | Required specification files exist | CI markdown/file validation | ✅ Pass |
+| R10 | Counterexample detection | Invalid assertions generate counterexamples | Alloy Analyzer verification | ✅ Pass |
 
 ---
 
