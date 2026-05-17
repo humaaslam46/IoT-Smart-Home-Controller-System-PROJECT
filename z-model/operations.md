@@ -181,6 +181,8 @@ doorState'          = doorState
 | `LoginUser` | FR-1 User Authentication | INV-1 |
 | `LockDoor` | FR-4 Door Lock Control | INV-1, INV-2 |
 | `ActivateAlarm` | FR-6 Alarm Activation | — |
+| `DeactivateAlarm` | FR-6 Alarm Activation | — |
+
 
 ---
 
