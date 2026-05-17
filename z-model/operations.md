@@ -135,6 +135,31 @@ doorState'          = doorState
 
 ---
 
+## 5. 🚨 DeactivateAlarm
+
+> Activates the smart home alarm system in response to an emergency condition.
+
+**Precondition:** The alarm must currently be `active`.
+**Postcondition:** The alarm state becomes `inactive`.
+
+```
+DeactivateAlarm
+───────────────────────────────────────────
+Δ SmartHomeSystem
+───────────────────────────────────────────
+alarmState = active
+
+alarmState' = inactive
+
+registeredUsers'    = registeredUsers
+authenticatedUsers' = authenticatedUsers
+registeredDevices'  = registeredDevices
+deviceStatus'       = deviceStatus
+doorState'          = doorState
+```
+
+---
+
 ## 📊 Operations Summary
 
 | Operation | Inputs | Precondition | What Changes |
@@ -143,6 +168,8 @@ doorState'          = doorState
 | `LoginUser` | `user?` | User exists in `registeredUsers` | `authenticatedUsers` |
 | `LockDoor` | `user?`, `door?` | User authenticated, door online | `doorState` |
 | `ActivateAlarm` | — | `alarmState = inactive` | `alarmState` |
+| `DeactivateAlarm` | — | `alarmState = active` | `alarmState` |
+
 
 ---
 
