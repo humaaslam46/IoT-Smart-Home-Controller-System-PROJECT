@@ -1,9 +1,7 @@
 -- =========================================================
 -- IoT Smart Home Controller System
--- VDM-SL Functional Specification
--- =========================================================
 -- TYPE DEFINITIONS
--- =========================================================
+
 types
 
 -- USER represents authorized system users
@@ -54,7 +52,6 @@ state SmartHomeSystem of
     alarmState : ALARMSTATE
 -- =========================================================
 -- STATE INVARIANTS
--- These rules must always remain true
 -- =========================================================
 
 inv mk_SmartHomeSystem
@@ -107,13 +104,7 @@ init s ==
     )
 -- =========================================================
 -- OPERATIONS
--- =========================================================
-operations
--- =========================================================
--- Operation: RegisterDevice
--- Purpose:
--- Registers a new smart device in the system
--- and assigns ONLINE status by default.
+-- Operation1: RegisterDevice
 -- =========================================================
 RegisterDevice : DEVICE ==> ()
 
@@ -142,9 +133,7 @@ post
     -- Newly registered device becomes ONLINE
     deviceStatus(d) = <online>;
 -- =========================================================
--- Operation: LoginUser
--- Purpose:
--- Authenticates a registered user.
+-- Operation2: LoginUser
 -- =========================================================
 
 LoginUser : USER ==> ()
@@ -165,9 +154,7 @@ post
     -- User becomes authenticated
     u in set authenticatedUsers;
 -- =========================================================
--- Operation: LockDoor
--- Purpose:
--- Locks a smart door device.
+-- Operation3: LockDoor
 -- =========================================================
 
 LockDoor : DEVICE ==> ()
@@ -195,8 +182,6 @@ post
 
 -- =========================================================
 -- Operation: ActivateAlarm
--- Purpose:
--- Activates the smart home alarm system.
 -- =========================================================
 
 ActivateAlarm : () ==> ()
@@ -218,8 +203,6 @@ post
 
 -- =========================================================
 -- Operation: DeactivateAlarm
--- Purpose:
--- Deactivates the smart home alarm system.
 -- =========================================================
 
 DeactivateAlarm : () ==> ()
