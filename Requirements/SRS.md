@@ -49,19 +49,10 @@ The system improves:
 |---|---|
 | 💡 Smart Lights | Remote ON/OFF control |
 | 🔐 Smart Doors | Remote lock and unlock |
-| 🌡️ Temperature | Real-time room monitoring |
 | 🚨 Alarms | Emergency activation/deactivation |
 | 👤 User Management | Authorized user registration and access |
 | 📡 Device Monitoring | Online/Offline/Fault status tracking |
 
-#### ❌ Out of Scope
-
-> The following are **intentionally excluded** to keep the project manageable within SVV lab scope:
-
-- 🤖 AI-based automation
-- 🎙️ Voice assistant integration
-- 📹 Real-time video surveillance
-- ☁️ Cloud synchronization
 
 ---
 
